@@ -1,15 +1,20 @@
 package com.lcampoverde.administrativo.cliente.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
+import com.lcampoverde.administrativo.cliente.constant.CatalogValueKeyWord;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -57,10 +62,11 @@ public class CatalogValue extends UserDateAudit implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "KEYWORD")
-    @Size(max = 4)
+    @Column(name = "KEYWORD", length = 4)
+    @Enumerated(EnumType.STRING)
+    @NaturalId
     @NotBlank
-    private String keyWord;
+    private CatalogValueKeyWord keyWord;
 
     @Column(name = "ENABLED")
     @ColumnDefault("1")
@@ -70,10 +76,10 @@ public class CatalogValue extends UserDateAudit implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
 
-    @Column(name = "CATALOG_ID", insertable=false ,updatable=false)
-    @Size(max = 4)
+    @Column(name = "CATALOG_ID", length = 4,insertable=false ,updatable=false)
+    @Enumerated(EnumType.STRING)
     @NotBlank
-    private String catalogId;
+    private CatalogKeyWord catalogId;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "CATALOG_ID", referencedColumnName = "KEYWORD")

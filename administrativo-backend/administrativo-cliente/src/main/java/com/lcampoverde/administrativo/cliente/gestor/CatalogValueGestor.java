@@ -63,7 +63,7 @@ public interface CatalogValueGestor {
      */
     default CatalogValueVO save(CatalogValueVO catalogValue) {
         try {
-            if (existsByKeyWord(CatalogValueKeyWord.valueOf(catalogValue.getKeyWord()))) {
+            if (existsByKeyWord(catalogValue.getKeyWord())) {
                 throw new AppException(CatalogValueError.EXIST_BY_KEYWORD.getConstant());
             }
             return catalogValue.toBuilder().id(
@@ -90,7 +90,7 @@ public interface CatalogValueGestor {
      * @return
      */
     default List<CatalogValueVO> findByCatalogId(CatalogKeyWord catalogKeyWord) {
-        return getRepository().findByCatalogId(catalogKeyWord.toString()).stream()
+        return getRepository().findByCatalogId(catalogKeyWord).stream()
                 .map(cv ->
                     CatalogValueVO.builder()
                         .id(cv.getId())
@@ -127,7 +127,7 @@ public interface CatalogValueGestor {
      */
     default CatalogValueVO update(CatalogValueVO catalogValue) {
         try {
-            if (existsByKeyWord(CatalogValueKeyWord.valueOf(catalogValue.getKeyWord()))) {
+            if (existsByKeyWord(catalogValue.getKeyWord())) {
                 throw new AppException(CatalogValueError.EXIST_BY_KEYWORD.getConstant());
             }
             Optional<CatalogValue> catalogValueOptional = getRepository().findById(catalogValue.getId());

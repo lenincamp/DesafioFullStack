@@ -1,6 +1,5 @@
 package com.lcampoverde.administrativo.core.gestor;
 
-import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
 import com.lcampoverde.administrativo.cliente.constant.error.CatalogError;
 import com.lcampoverde.administrativo.cliente.constant.error.CrudError;
 import com.lcampoverde.administrativo.cliente.constant.error.LoggerError;
@@ -44,7 +43,7 @@ public class CatalogGestorImpl implements CatalogGestor {
     @Override
     public Catalog update(Catalog catalog) {
         try {
-            Optional<Catalog> catalogOptional = findByKeyWord(CatalogKeyWord.valueOf(catalog.getKeyWord()));
+            Optional<Catalog> catalogOptional = findByKeyWord(catalog.getKeyWord());
             if (catalogOptional.isPresent()) {
                 return save(
                         catalogOptional.get().toBuilder()

@@ -1,12 +1,15 @@
 package com.lcampoverde.administrativo.cliente.model.nopersist;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -21,7 +24,8 @@ public class CatalogVO implements Serializable {
 
     private static final long serialVersionUID = -5737599102306274315L;
 
-    private String keyWord;
+    @Enumerated(EnumType.STRING)
+    private CatalogKeyWord keyWord;
 
     private String name;
 

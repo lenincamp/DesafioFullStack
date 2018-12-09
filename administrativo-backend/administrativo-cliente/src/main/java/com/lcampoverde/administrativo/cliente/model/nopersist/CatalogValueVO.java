@@ -1,12 +1,16 @@
 package com.lcampoverde.administrativo.cliente.model.nopersist;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
+import com.lcampoverde.administrativo.cliente.constant.CatalogValueKeyWord;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
@@ -26,14 +30,18 @@ public class CatalogValueVO implements Serializable {
     private String name;
     @NotBlank
     private String description;
+
     @NotBlank
-    private String keyWord;
+    @Enumerated(EnumType.STRING)
+    private CatalogValueKeyWord keyWord;
 
     private Boolean enabled;
 
     private Date endDate;
+
     @NotBlank
-    private String catalogId;
+    @Enumerated(EnumType.STRING)
+    private CatalogKeyWord catalogId;
 
     @Override
     public boolean equals(Object o) {

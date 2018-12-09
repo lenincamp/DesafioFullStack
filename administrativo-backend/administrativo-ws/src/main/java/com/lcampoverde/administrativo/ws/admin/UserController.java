@@ -1,6 +1,8 @@
 package com.lcampoverde.administrativo.ws.admin;
 
 import com.lcampoverde.administrativo.cliente.constant.ResponseMessages;
+import com.lcampoverde.administrativo.cliente.constant.error.UserError;
+import com.lcampoverde.administrativo.cliente.model.User;
 import com.lcampoverde.administrativo.cliente.model.nopersist.CustomApiResponse;
 import com.lcampoverde.administrativo.cliente.model.nopersist.SignUpRequest;
 import com.lcampoverde.administrativo.cliente.service.UserService;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -51,6 +56,34 @@ public class UserController {
             else
                 ResponseMessages.NO_FILTERS.getConstant();
             return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.TRUE).dataCol(new ArrayList<>(users)).build());
+        } catch (Exception e) {
+            return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
+        }
+    }
+
+
+    @GetMapping("/find/{id}")
+    @ApiOperation(value = "Find user by id.", response = CustomApiResponse.class,
+            notes = "User in data property.", responseContainer = "User")
+    public ResponseEntity<CustomApiResponse> findUserById(
+            @NotNull @PathVariable Long id
+    ) {
+        try {
+            Optional<User> user = userService.findUserById(id);
+            if (user.isPresent()) {
+                return ResponseEntity.ok(
+                    CustomApiResponse.builder().success(Boolean.TRUE).data(
+                        user.get()
+                            .toBuilder()
+                            .roles(null)
+                            .userGroups(null)
+                            .permissions(null)
+                            .build()
+                    ).build()
+                );
+            } else {
+                return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(UserError.NOT_EXIST.getConstant()).build());
+            }
         } catch (Exception e) {
             return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
         }

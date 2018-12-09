@@ -1,6 +1,7 @@
 package com.lcampoverde.administrativo.cliente.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,6 +11,8 @@ import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -36,9 +39,9 @@ import java.util.Set;
 public class Catalog extends UserDateAudit implements Serializable {
     private static final long serialVersionUID = -4202147258794998898L;
     @Id
-    @Column(name = "KEYWORD")
-    @Size(max = 4)
-    private String keyWord;
+    @Column(name = "KEYWORD", length = 4)
+    @Enumerated(EnumType.STRING)
+    private CatalogKeyWord keyWord;
 
     @NotBlank
     @Size(max = 60)

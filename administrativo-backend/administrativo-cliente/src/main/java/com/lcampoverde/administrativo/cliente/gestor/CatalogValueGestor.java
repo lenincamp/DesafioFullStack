@@ -90,7 +90,7 @@ public interface CatalogValueGestor {
      * @return
      */
     default List<CatalogValueVO> findByCatalogId(CatalogKeyWord catalogKeyWord) {
-        return getRepository().findByCatalogId(catalogKeyWord).stream()
+        return getRepository().findByCatalogId(catalogKeyWord.toString()).stream()
                 .map(cv ->
                     CatalogValueVO.builder()
                         .id(cv.getId())

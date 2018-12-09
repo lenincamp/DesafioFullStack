@@ -1,6 +1,5 @@
 package com.lcampoverde.administrativo.cliente.repository;
 
-import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
 import com.lcampoverde.administrativo.cliente.constant.CatalogValueKeyWord;
 import com.lcampoverde.administrativo.cliente.model.CatalogValue;
 import org.springframework.context.annotation.Lazy;
@@ -36,7 +35,7 @@ public interface CatalogValueRepository extends JpaRepository<CatalogValue, Long
      * @return list catalog by id catalog.
      */
     @Query("select cv from CatalogValue cv where cv.catalogId = :catalogKeyWord and cv.endDate is null and cv.enabled = true")
-    List<CatalogValue> findByCatalogId(@Param("catalogKeyWord") CatalogKeyWord catalogKeyWord);
+    List<CatalogValue> findByCatalogId(@Param("catalogKeyWord") String catalogKeyWord);
 
     /**
      * Find by catalog value id or catalog value keyword

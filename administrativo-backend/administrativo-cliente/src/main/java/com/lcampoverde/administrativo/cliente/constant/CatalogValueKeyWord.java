@@ -7,5 +7,7 @@ package com.lcampoverde.administrativo.cliente.constant;
 
 public enum CatalogValueKeyWord {
     TPP,
-    STS
+    STS,
+    SA,
+    SF
 }

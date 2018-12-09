@@ -7,6 +7,7 @@ import com.lcampoverde.administrativo.cliente.exception.AppException;
 import com.lcampoverde.administrativo.cliente.exception.ErrorException;
 import com.lcampoverde.administrativo.cliente.gestor.ExecutionGestor;
 import com.lcampoverde.administrativo.cliente.model.Execution;
+import com.lcampoverde.administrativo.cliente.model.StatusUser;
 import com.lcampoverde.administrativo.cliente.model.nopersist.CatalogValueVO;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ConclusionsVO;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ExecutionVO;
@@ -171,7 +172,9 @@ public class ExecutionGestorImpl implements ExecutionGestor {
                             .build()
                     ).collect(Collectors.toSet())
                 ).users(
-                    sts.getUsers().stream().map( u ->
+                    sts.getStatusUsers().stream()
+                    .map(StatusUser::getUser)
+                    .map( u ->
                         SignUpRequest.builder()
                             .email(u.getEmail())
                             .firstName(u.getFirstName())
@@ -189,7 +192,9 @@ public class ExecutionGestorImpl implements ExecutionGestor {
                             .build()
                     ).collect(Collectors.toSet())
                 ).observations(
-                    sts.getObservations().stream().map( obs ->
+                    sts.getStatusUsers().stream()
+                    .flatMap((StatusUser su) -> su.getObservations().stream())
+                    .map( obs ->
                         ObservationsVO.builder()
                             .catalogValueVO(
                                 CatalogValueVO.builder()
@@ -218,7 +223,9 @@ public class ExecutionGestorImpl implements ExecutionGestor {
             executionRepository.save(ex.toBuilder().enabled(Boolean.FALSE).build());
             ex.getStatuses().forEach(e -> {
                 observationsRepository.saveAll(
-                    e.getObservations().stream().map(ob -> ob.toBuilder().enabled(Boolean.FALSE).build()).collect(Collectors.toSet())
+                    e.getStatusUsers().stream()
+                        .flatMap((StatusUser su) -> su.getObservations().stream())
+                        .map(ob -> ob.toBuilder().enabled(Boolean.FALSE).build()).collect(Collectors.toSet())
                 );
                 conclusionsRepository.saveAll(
                     e.getConclusions().stream().map(cc -> cc.toBuilder().enabled(Boolean.FALSE).build()).collect(Collectors.toSet())

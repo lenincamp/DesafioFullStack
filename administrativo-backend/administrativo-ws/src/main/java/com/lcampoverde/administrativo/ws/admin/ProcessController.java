@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -64,6 +65,22 @@ public class ProcessController {
                     .success(Boolean.TRUE)
                     .dataCol(new ArrayList<>(processService.findAllProcess()))
                     .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
+        }
+    }
+
+    @GetMapping("/find_by_user")
+    @ApiOperation(value = "List process by user.", response = CustomApiResponse.class,
+            notes = "Multiple values of process in dataCol property.", responseContainer = "List<Process>")
+    public ResponseEntity<CustomApiResponse> findProcessByUserId(@RequestParam Long userId) {
+        try {
+            return ResponseEntity.ok(
+                    CustomApiResponse.builder()
+                        .success(Boolean.TRUE)
+                        .dataCol(new ArrayList<>(processService.findByUserId(userId)))
+                        .build()
             );
         } catch (Exception e) {
             return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());

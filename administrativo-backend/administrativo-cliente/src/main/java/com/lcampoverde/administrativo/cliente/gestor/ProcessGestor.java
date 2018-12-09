@@ -1,9 +1,11 @@
 package com.lcampoverde.administrativo.cliente.gestor;
 
+import com.lcampoverde.administrativo.cliente.model.Process;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ProcessVO;
 import com.lcampoverde.administrativo.cliente.repository.ProcessRepository;
 
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * @author lenin
@@ -67,4 +69,10 @@ public interface ProcessGestor {
      */
     ProcessVO update(ProcessVO processVO);
 
+    /**
+     * Find process by userId
+     * @param userId
+     * @return
+     */
+    Set<Process> findByUserId(Long userId);
 }

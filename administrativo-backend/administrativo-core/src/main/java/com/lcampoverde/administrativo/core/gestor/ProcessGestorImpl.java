@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
@@ -178,5 +179,13 @@ public class ProcessGestorImpl implements ProcessGestor {
         if (existsByName(processVO.getName().trim())) {
             throw new AppException(ProcessError.EXIST.getConstant());
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<Process> findByUserId(Long userId) {
+        return processRepository.findByUserId(userId);
     }
 }

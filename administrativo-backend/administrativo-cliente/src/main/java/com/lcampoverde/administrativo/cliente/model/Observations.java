@@ -49,6 +49,10 @@ public class Observations extends UserDateAudit implements Serializable {
     private Long statusId;
 
     @NotNull
+    @Column(name = "USER_ID")
+    private Long userId;
+
+    @NotNull
     @Column(name = "CATALOG_VALUE_ID")
     private Long catalogValueId;
 
@@ -57,19 +61,17 @@ public class Observations extends UserDateAudit implements Serializable {
     @NotNull
     @Builder.Default private Boolean enabled = Boolean.TRUE;
 
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable=false ,updatable=false)
+    @JoinColumn(name = "STATUS_ID", referencedColumnName = "STATUS_ID", insertable=false ,updatable=false)
+    private StatusUser statusUser;
+
     /**
      * Severity.(mild, medium, high, very high, extremely high)
      */
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name = "CATALOG_VALUE_ID", referencedColumnName = "ID", insertable=false ,updatable=false)
     private CatalogValue catalogValue;
-
-    /**
-     * status of process executions.
-     */
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "STATUS_ID", referencedColumnName = "ID", insertable=false ,updatable=false)
-    private Status status;
 
     @Override
     public boolean equals(Object o) {

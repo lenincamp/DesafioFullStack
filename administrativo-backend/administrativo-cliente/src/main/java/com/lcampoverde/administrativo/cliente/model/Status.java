@@ -15,8 +15,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -25,7 +23,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -73,25 +70,17 @@ public class Status extends UserDateAudit implements Serializable {
     private CatalogValue catalogValue;
 
     /**
-     * Actors on status.
+     * Conclusions of status.
      */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "STATUS_USER",
-            joinColumns = @JoinColumn(name = "STATUS_ID"),
-            inverseJoinColumns = @JoinColumn(name = "USER_ID"))
-    private Set<User> users = new HashSet<>();
+    @OneToMany(mappedBy = "status")
+    private Set<StatusUser> statusUsers;
+
 
     /**
      * Conclusions of status.
      */
     @OneToMany(mappedBy = "status")
     private Set<Conclusions> conclusions;
-
-    /**
-     * Observations of status.
-     */
-    @OneToMany(mappedBy = "status")
-    private Set<Observations> observations;
 
     /**
      * Objectives of status.

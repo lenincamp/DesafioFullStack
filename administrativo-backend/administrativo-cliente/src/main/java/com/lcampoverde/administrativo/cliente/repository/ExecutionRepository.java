@@ -48,9 +48,10 @@ public interface ExecutionRepository extends JpaRepository<Execution, Long> {
     @Query( "select ex from Execution ex" +
             " join fetch ex.statuses st " +
             " join fetch st.catalogValue cv" +
-            " join fetch st.users us " +
+            " join fetch st.statusUsers su " +
+            " join fetch su.user us " +
             " join fetch st.conclusions cc" +
-            " join fetch st.observations obs" +
+            " join fetch su.observations obs" +
             " join fetch obs.catalogValue cvo" +
             " join fetch st.objectives obj" +
             " where ex.id = :id " +

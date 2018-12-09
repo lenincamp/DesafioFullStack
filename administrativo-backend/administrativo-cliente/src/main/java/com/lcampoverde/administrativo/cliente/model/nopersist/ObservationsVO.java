@@ -29,6 +29,8 @@ public class ObservationsVO implements Serializable {
      */
     private Long catalogValueId;
 
+    private Long userId;
+
     CatalogValueVO catalogValueVO;
 
     @Override

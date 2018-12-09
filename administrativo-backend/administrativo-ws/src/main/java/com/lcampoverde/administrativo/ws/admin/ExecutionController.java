@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,7 +43,7 @@ public class ExecutionController {
 
     @PostMapping("/create")
     @ApiOperation(value = "Create execution process.", response = CustomApiResponse.class)
-    public ResponseEntity<CustomApiResponse> createExecutionProcess(@RequestBody ExecutionVO executionVO) {
+    public ResponseEntity<CustomApiResponse> createExecutionProcess(@Valid @RequestBody ExecutionVO executionVO) {
         try {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/api/process/execution/{id}")
@@ -109,7 +110,7 @@ public class ExecutionController {
     @PutMapping("/update")
     @ApiOperation(value = "Update execution process by id.", response = CustomApiResponse.class,
             notes = "Return execution process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> updateExecutionProcess(@RequestBody ExecutionVO executionVO) {
+    public ResponseEntity<CustomApiResponse> updateExecutionProcess(@Valid @RequestBody ExecutionVO executionVO) {
         try {
             return ResponseEntity.ok(
                 CustomApiResponse.builder()

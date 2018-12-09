@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.ArrayList;
 
@@ -71,10 +72,26 @@ public class ProcessController {
         }
     }
 
+    @GetMapping("/find_by_edit/{id}")
+    @ApiOperation(value = "Get process by id.", response = CustomApiResponse.class,
+            notes = "Process in data property.", responseContainer = "Process")
+    public ResponseEntity<CustomApiResponse> findProcessById(@NotNull @PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(
+                    CustomApiResponse.builder()
+                            .success(Boolean.TRUE)
+                            .data(processService.findProcessById(id))
+                            .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
+        }
+    }
+
     @GetMapping("/find_by_user")
     @ApiOperation(value = "List process by user.", response = CustomApiResponse.class,
             notes = "Multiple values of process in dataCol property.", responseContainer = "List<Process>")
-    public ResponseEntity<CustomApiResponse> findProcessByUserId(@RequestParam Long userId) {
+    public ResponseEntity<CustomApiResponse> findProcessByUserId(@NotNull @RequestParam Long userId) {
         try {
             return ResponseEntity.ok(
                     CustomApiResponse.builder()
@@ -90,7 +107,7 @@ public class ProcessController {
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Delete process by id.", response = CustomApiResponse.class,
             notes = "On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> deleteProcess(@PathVariable Long id) {
+    public ResponseEntity<CustomApiResponse> deleteProcess(@NotNull @PathVariable Long id) {
         try {
             processService.deleteProcessById(id);
             return ResponseEntity.ok(
@@ -107,7 +124,7 @@ public class ProcessController {
     @PutMapping("/update")
     @ApiOperation(value = "Update process.", response = CustomApiResponse.class,
             notes = "Return process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> updateProcess(@RequestBody ProcessVO processVO) {
+    public ResponseEntity<CustomApiResponse> updateProcess(@Valid @RequestBody ProcessVO processVO) {
         try {
             return ResponseEntity.ok(
                     CustomApiResponse.builder()

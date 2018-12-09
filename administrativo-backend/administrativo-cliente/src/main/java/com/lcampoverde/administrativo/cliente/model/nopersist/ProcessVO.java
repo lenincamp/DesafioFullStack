@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
@@ -24,13 +25,13 @@ public class ProcessVO implements Serializable {
 
     private static final long serialVersionUID = -3045936485281478412L;
     private Long id;
-
+    @NotBlank
     private String name;
-
+    @NotBlank
     private String description;
 
     private Boolean enabled;
-
+    @NotBlank
     private Long typeProcess;
 
     private Set<WorkFlowVO> workFlows;

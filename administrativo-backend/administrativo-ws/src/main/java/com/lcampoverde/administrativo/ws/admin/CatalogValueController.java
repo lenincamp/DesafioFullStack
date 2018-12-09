@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.net.URI;
 import java.util.ArrayList;
 
@@ -38,7 +40,7 @@ public class CatalogValueController {
 
     @PostMapping("/create")
     @ApiOperation(value = "Create catalog value.", response = CustomApiResponse.class)
-    public ResponseEntity<CustomApiResponse> createCatalogValue(@RequestBody CatalogValueVO catalogValue) {
+    public ResponseEntity<CustomApiResponse> createCatalogValue(@Valid @RequestBody CatalogValueVO catalogValue) {
         try {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentContextPath().path("/api/process/catalog/catalogValue/{id}")
@@ -59,7 +61,7 @@ public class CatalogValueController {
     @ApiOperation(value = "List catalog value by catalogId.", response = CustomApiResponse.class,
             notes = "Multiple values of catalogValue in dataCol property.", responseContainer = "List<CatalogValue>")
     public ResponseEntity<CustomApiResponse> findCatalogValueByCatalogId(
-            @RequestParam CatalogKeyWord catalogKeyWord
+           @NotNull @RequestParam CatalogKeyWord catalogKeyWord
     ) {
         try {
             return ResponseEntity.ok(
@@ -76,7 +78,7 @@ public class CatalogValueController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "Delete catalogValue by id.", response = CustomApiResponse.class,
             notes = "On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> deleteCatalogValueById(@RequestParam Long id) {
+    public ResponseEntity<CustomApiResponse> deleteCatalogValueById(@NotNull @RequestParam Long id) {
         try {
            catalogValueService.deleteCatalogValueByIdOrCatalogValueKeyWord(id, null);
             return ResponseEntity.ok(
@@ -93,7 +95,7 @@ public class CatalogValueController {
     @PutMapping("/update")
     @ApiOperation(value = "Update catalogValue by id.", response = CustomApiResponse.class,
             notes = "Return execution process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> updateCatalogValueById(@RequestBody CatalogValueVO catalogValue) {
+    public ResponseEntity<CustomApiResponse> updateCatalogValueById(@Valid @RequestBody CatalogValueVO catalogValue) {
         try {
             return ResponseEntity.ok(
                 CustomApiResponse.builder()

@@ -49,7 +49,7 @@ public class Execution extends UserDateAudit implements Serializable {
     private String alias;
 
     @Column(name = "FINISH_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date finishDate;
 
     @Column(name = "PROCESS_ID")

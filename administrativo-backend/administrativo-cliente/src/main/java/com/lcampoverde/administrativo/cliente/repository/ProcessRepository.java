@@ -4,6 +4,7 @@ import com.lcampoverde.administrativo.cliente.model.Process;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Set;
@@ -31,6 +32,6 @@ public interface ProcessRepository extends JpaRepository<Process, Long> {
      * @param enabled status active o inactive.
      * @return all process with condition.
      */
-    @Query("select p from Process p join fetch p.catalogValue cv where u.enabled = :enabled and r.id=roleId")
-    Set<Process> findByEnabled(Boolean enabled);
+    @Query("select p from Process p join fetch p.catalogValue cv where p.enabled = :enabled")
+    Set<Process> findByEnabled(@Param("enabled")Boolean enabled);
 }

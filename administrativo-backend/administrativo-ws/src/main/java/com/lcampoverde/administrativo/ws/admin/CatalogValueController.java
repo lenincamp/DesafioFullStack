@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 /**
  * @author lenin
- * Rest controller for execution process.
+ * Rest controller for catalog value.
  */
 @RestController
 @RequestMapping("/api/catalog/catalogValue")

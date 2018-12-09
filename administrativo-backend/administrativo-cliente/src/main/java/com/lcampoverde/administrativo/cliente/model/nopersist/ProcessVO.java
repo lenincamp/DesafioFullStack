@@ -37,6 +37,8 @@ public class ProcessVO implements Serializable {
 
     private Set<ExecutionVO> executions;
 
+    private CatalogValueVO catalogValueVO;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -48,7 +48,7 @@ public class UserPrincipal implements UserDetails {
     public static UserPrincipal create(User user, Boolean getRoles) {
         return new UserPrincipal(
                 user.getId(),
-                user.getName(),
+                user.getFullName(),
                 user.getUserName(),
                 user.getEmail(),
                 user.getPassword(),

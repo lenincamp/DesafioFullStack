@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author lenin
@@ -73,10 +74,45 @@ public interface UserGestor {
     }
 
     /**
+     * Delete user by id.
+     * @param userId
+     */
+    default void deleteUserById(Long userId) {
+        try {
+            getUserRepository().upDownUser(Boolean.FALSE, userId);
+        } catch (Exception ex) {
+            logger.error(LoggerError.SAVE.getConstant(), ex);
+            throw new ErrorException(CrudError.SAVE.getConstant());
+        }
+    }
+
+    /**
      * Find user by id.
      * @param userId
      */
     default Optional<User> findById(Long userId){
         return getUserRepository().findById(userId);
     }
+
+    /**
+     * Get users by status(active, inactive) and role id.
+     * @param enabled status of user.
+     * @param roleId role by search users.
+     * @return list of user pojo.
+     */
+    Set<SignUpRequest> findByEnabledAndRole(Boolean enabled, Long roleId) ;
+
+    /**
+     * Find all users active in the system.
+     * @param enabled status of user search.
+     * @return list of user pojo.
+     */
+    Set<SignUpRequest> findByEnabled(Boolean enabled) ;
+
+    /**
+     * Update user.
+     * @param user user pojo.
+     * @return user updated.
+     */
+    SignUpRequest updateUser(SignUpRequest user);
 }

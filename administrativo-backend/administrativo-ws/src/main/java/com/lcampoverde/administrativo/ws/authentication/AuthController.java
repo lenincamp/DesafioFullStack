@@ -1,8 +1,8 @@
 package com.lcampoverde.administrativo.ws.authentication;
 
+import com.lcampoverde.administrativo.cliente.constant.ResponseMessages;
 import com.lcampoverde.administrativo.cliente.constant.error.CrudError;
 import com.lcampoverde.administrativo.cliente.constant.error.UserError;
-import com.lcampoverde.administrativo.cliente.constant.ResponseMessages;
 import com.lcampoverde.administrativo.cliente.model.Role;
 import com.lcampoverde.administrativo.cliente.model.User;
 import com.lcampoverde.administrativo.cliente.model.nopersist.CustomApiResponse;

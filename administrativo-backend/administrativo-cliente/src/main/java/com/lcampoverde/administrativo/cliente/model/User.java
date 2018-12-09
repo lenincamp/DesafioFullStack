@@ -60,8 +60,8 @@ public class User extends UserDateAudit implements Serializable {
 
     @NotBlank
     @Size(max = 100)
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "FULLNAME")
+    private String fullName;
 
     @Column(name = "FIRSTNAME", length = 50)
     @NotNull

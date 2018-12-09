@@ -5,6 +5,7 @@ import com.lcampoverde.administrativo.cliente.model.User;
 import com.lcampoverde.administrativo.cliente.model.nopersist.SignUpRequest;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author lenin
@@ -51,4 +52,32 @@ public interface UserService {
      * @param userId
      */
     Optional<User> findUserById(Long userId);
+
+    /**
+     * Delete user by id.
+     * @param userId
+     */
+    void deleteUserById(Long userId);
+
+    /**
+     * Get users by status(active, inactive) and role id.
+     * @param enabled status of user.
+     * @param roleId role by search users.
+     * @return list of user pojo.
+     */
+    Set<SignUpRequest> findByEnabledAndRole(Boolean enabled, Long roleId) ;
+
+    /**
+     * Find all users active in the system.
+     * @param enabled status of user search.
+     * @return list of user pojo.
+     */
+    Set<SignUpRequest> findByEnabled(Boolean enabled) ;
+
+    /**
+     * Update user.
+     * @param user user pojo.
+     * @return user updated.
+     */
+    SignUpRequest updateUser(SignUpRequest user);
 }

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author lenin
@@ -68,4 +69,37 @@ public class UserServiceImpl implements UserService {
        return  userGestor.findById(userId);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(rollbackFor = ErrorException.class)
+    public void deleteUserById(Long userId) {
+        userGestor.deleteUserById(userId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<SignUpRequest> findByEnabledAndRole(Boolean enabled, Long roleId) {
+        return userGestor.findByEnabledAndRole(enabled, roleId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Set<SignUpRequest> findByEnabled(Boolean enabled) {
+        return userGestor.findByEnabled(enabled);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Transactional(rollbackFor = ErrorException.class)
+    public SignUpRequest updateUser(SignUpRequest user) {
+        return userGestor.updateUser(user);
+    }
 }

@@ -8,6 +8,7 @@ import com.lcampoverde.administrativo.cliente.exception.ErrorException;
 import com.lcampoverde.administrativo.cliente.gestor.ExecutionGestor;
 import com.lcampoverde.administrativo.cliente.gestor.ProcessGestor;
 import com.lcampoverde.administrativo.cliente.model.Process;
+import com.lcampoverde.administrativo.cliente.model.nopersist.CatalogValueVO;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ProcessVO;
 import com.lcampoverde.administrativo.cliente.repository.ProcessRepository;
 import org.slf4j.Logger;
@@ -71,7 +72,20 @@ public class ProcessGestorImpl implements ProcessGestor {
     public Collection<ProcessVO> findAllProcess() {
         return processRepository.findByEnabled(Boolean.TRUE)
         .stream().map( p ->
-            ProcessVO.builder().id(p.getId()).description(p.getDescription()).name(p.getName()).build()
+            ProcessVO.builder()
+                .id(p.getId())
+                .description(p.getDescription())
+                .name(p.getName())
+                .catalogValueVO(
+                    CatalogValueVO.builder()
+                        .id(p.getCatalogValue().getId())
+                        .keyWord(p.getCatalogValue().getKeyWord())
+                        .name(p.getCatalogValue().getName())
+                        .description(p.getCatalogValue().getDescription())
+                        .catalogId(p.getCatalogValue().getCatalogId())
+                        .build()
+                )
+                .build()
         ).collect(Collectors.toList());
     }
 

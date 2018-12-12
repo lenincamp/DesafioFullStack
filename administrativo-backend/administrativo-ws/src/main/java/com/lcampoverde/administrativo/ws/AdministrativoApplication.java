@@ -24,7 +24,7 @@ import java.util.TimeZone;
 @EnableJpaRepositories(basePackages = {"com.lcampoverde.administrativo.cliente"})
 public class AdministrativoApplication {
   @PostConstruct
-  void init() {
+  public void started() {
     TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
   }
 

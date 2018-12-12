@@ -26,6 +26,7 @@ spring:
     username: sa
     password:
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     generate-ddl: false
     hibernate:
@@ -34,6 +35,8 @@ spring:
     open-in-view: false
     properties:
       hibernate :
+        jdbc:
+          time_zone: UTC
         hbm2ddl:
           import_files: data-h2.sql
         temp:

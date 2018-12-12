@@ -77,7 +77,9 @@ public interface UserService {
     /**
      * Update user.
      * @param user user pojo.
+     * @param userId userId.
+     * @param roleId roleId to update.
      * @return user updated.
      */
-    SignUpRequest updateUser(SignUpRequest user);
+    SignUpRequest updateUser(Long userId, Long roleId, SignUpRequest user);
 }

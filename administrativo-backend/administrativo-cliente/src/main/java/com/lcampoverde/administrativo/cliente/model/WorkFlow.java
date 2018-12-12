@@ -51,7 +51,7 @@ public class WorkFlow implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @NotBlank
+    @NotNull
     @Column(name = "NUMBER_OF_STEP")
     private Integer numberStep;
 

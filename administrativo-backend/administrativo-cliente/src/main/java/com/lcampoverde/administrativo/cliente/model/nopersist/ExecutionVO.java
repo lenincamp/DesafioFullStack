@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -28,7 +28,7 @@ public class ExecutionVO implements Serializable {
 
     private Date finishDate;
 
-    @NotBlank
+    @NotNull
     private Long processId;
 
     @ApiModelProperty(value = "statuses")

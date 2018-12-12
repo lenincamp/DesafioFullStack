@@ -6,6 +6,7 @@ import com.lcampoverde.administrativo.cliente.constant.error.UserError;
 import com.lcampoverde.administrativo.cliente.exception.AppException;
 import com.lcampoverde.administrativo.cliente.exception.ErrorException;
 import com.lcampoverde.administrativo.cliente.gestor.UserGestor;
+import com.lcampoverde.administrativo.cliente.gestor.UserRoleGestor;
 import com.lcampoverde.administrativo.cliente.model.Role;
 import com.lcampoverde.administrativo.cliente.model.User;
 import com.lcampoverde.administrativo.cliente.model.nopersist.RoleVO;
@@ -37,6 +38,10 @@ public class UserGestorImpl implements UserGestor {
     @Autowired
     @Lazy
     private UserRepository userRepository;
+
+    @Autowired
+    @Lazy
+    private UserRoleGestor userRoleGestor;
 
     /**
      * {@inheritDoc}
@@ -108,10 +113,11 @@ public class UserGestorImpl implements UserGestor {
      * {@inheritDoc}
      */
     @Override
-    public SignUpRequest updateUser(SignUpRequest user) {
+    public SignUpRequest updateUser(Long userId, Long roleId, SignUpRequest user) {
         try {
             Optional<User> userSearch = findById(user.getId());
             if(userSearch.isPresent()) {
+                userRoleGestor.updateUserRole(userId, roleId, user.getRoles().iterator().next().getId());
                 userRepository.save(
                     userSearch.get()
                         .toBuilder()

@@ -99,7 +99,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional(rollbackFor = ErrorException.class)
-    public SignUpRequest updateUser(SignUpRequest user) {
-        return userGestor.updateUser(user);
+    public SignUpRequest updateUser(Long userId, Long roleId, SignUpRequest user) {
+        return userGestor.updateUser(userId, roleId, user);
     }
 }

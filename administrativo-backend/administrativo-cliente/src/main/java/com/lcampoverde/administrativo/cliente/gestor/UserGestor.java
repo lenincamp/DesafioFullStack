@@ -112,7 +112,9 @@ public interface UserGestor {
     /**
      * Update user.
      * @param user user pojo.
+     * @param userId user id.
+     * @param roleId role id for update.
      * @return user updated.
      */
-    SignUpRequest updateUser(SignUpRequest user);
+    SignUpRequest updateUser(Long userId, Long roleId, SignUpRequest user);
 }

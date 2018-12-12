@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -93,7 +92,7 @@ public class UserController {
     @ApiOperation(value = "Delete user by id.", response = CustomApiResponse.class,
             notes = "On error return false and message error for client.", responseContainer = "CustomApiResponse")
     public ResponseEntity<CustomApiResponse> deleteUserById(
-            @NotBlank @RequestParam Long id
+            @NotNull @RequestParam Long id
     ) {
         try {
             userService.deleteUserById(id);
@@ -103,16 +102,16 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update")
+    @PutMapping("/update/{userId}/{roleId}")
     @ApiOperation(value = "Update execution process by id.", response = CustomApiResponse.class,
             notes = "Return execution process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
-    public ResponseEntity<CustomApiResponse> updateUserById(@RequestBody SignUpRequest user) {
+    public ResponseEntity<CustomApiResponse> updateUserById(@NotNull @PathVariable Long userId, @NotNull @PathVariable Long roleId, @RequestBody SignUpRequest user) {
         try {
             return ResponseEntity.ok(
                 CustomApiResponse.builder()
                     .success(Boolean.TRUE)
                     .message(ResponseMessages.SAVE_UPDATE.getConstant())
-                    .data(userService.updateUser(user))
+                    .data(userService.updateUser(userId, roleId, user))
                     .build()
             );
         } catch (Exception e) {

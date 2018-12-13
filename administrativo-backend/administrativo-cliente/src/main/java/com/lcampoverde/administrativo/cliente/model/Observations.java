@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -20,7 +21,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * @author lenin
@@ -32,13 +32,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "OBSERVATIONS")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode(callSuper = false)
 public class Observations extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = 2157290304093990974L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @Column(name = "DESCRIPTION")
     @Size(max = 150)
@@ -73,16 +74,4 @@ public class Observations extends UserDateAudit implements Serializable {
     @JoinColumn(name = "CATALOG_VALUE_ID", referencedColumnName = "ID", insertable=false ,updatable=false)
     private CatalogValue catalogValue;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Observations that = (Observations) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
@@ -29,7 +30,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -49,6 +49,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Builder(toBuilder=true)
+@EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class User extends UserDateAudit implements Serializable {
 
@@ -56,7 +57,7 @@ public class User extends UserDateAudit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @NotBlank
     @Size(max = 100)
@@ -98,40 +99,27 @@ public class User extends UserDateAudit implements Serializable {
     @JoinTable(name = "USER_ROLES",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    private Set<Role> roles = new HashSet<>();
+    @Builder.Default private Set<Role> roles = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "MEMBER_USER_GROUP",
             joinColumns = @JoinColumn(name = "USER_ID"),
             inverseJoinColumns = @JoinColumn(name = "USER_GROUP_ID"))
-    private Set<UserGroup> userGroups = new HashSet<>();
+    @Builder.Default private Set<UserGroup> userGroups = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "USER_PERMISSION",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = {@JoinColumn(name = "MODULE_ID"), @JoinColumn(name = "ACTION_ID")}
+            joinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = {@JoinColumn(name = "MODULE_ID", referencedColumnName = "MODULE_ID"), @JoinColumn(name = "ACTION_ID", referencedColumnName = "ACTION_ID")}
     )
-    private Set<ModuleAction> permissions = new HashSet<>();
+    @Builder.Default private Set<ModuleAction> permissions = new HashSet<>();
 
     @Column(name = "LASTPASSWORDRESETDATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date lastPasswordResetDate = new Date();
+    @Builder.Default private Date lastPasswordResetDate = new Date();
 
     @Column(name = "ENABLED")
     @NotNull(message = "User status is required")
     @Builder.Default private Boolean enabled = Boolean.TRUE;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), id);
-    }
 }

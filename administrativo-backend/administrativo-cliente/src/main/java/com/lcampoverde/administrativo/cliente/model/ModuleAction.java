@@ -1,6 +1,7 @@
 package com.lcampoverde.administrativo.cliente.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,11 +24,12 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode
 public class ModuleAction implements Serializable {
 
     private static final long serialVersionUID = -5928414619559449921L;
     @EmbeddedId
-    private ModuleActionId id;
+    @EqualsAndHashCode.Include private ModuleActionId id;
 
     @Column(name = "URL")
     private String url;

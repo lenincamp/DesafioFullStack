@@ -6,6 +6,7 @@ import com.lcampoverde.administrativo.cliente.constant.CatalogValueKeyWord;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -38,6 +39,7 @@ import java.util.Date;
 @Getter
 @Builder(toBuilder=true)
 @Entity
+@EqualsAndHashCode(callSuper = false)
 @Table(name = "CATALOG_VALUE", uniqueConstraints = {
     @UniqueConstraint(columnNames = {
             "KEYWORD"
@@ -50,7 +52,7 @@ public class CatalogValue extends UserDateAudit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @NotBlank
     @Size(max = 60)

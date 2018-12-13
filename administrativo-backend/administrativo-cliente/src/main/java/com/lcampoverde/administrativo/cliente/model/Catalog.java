@@ -5,6 +5,7 @@ import com.lcampoverde.administrativo.cliente.constant.CatalogKeyWord;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -23,7 +24,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -33,6 +33,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Builder(toBuilder=true)
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "CATALOG")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -41,7 +42,7 @@ public class Catalog extends UserDateAudit implements Serializable {
     @Id
     @Column(name = "KEYWORD", length = 4)
     @Enumerated(EnumType.STRING)
-    private CatalogKeyWord keyWord;
+    @EqualsAndHashCode.Include private CatalogKeyWord keyWord;
 
     @NotBlank
     @Size(max = 60)
@@ -64,17 +65,4 @@ public class Catalog extends UserDateAudit implements Serializable {
 
     @OneToMany(mappedBy = "catalog")
     private Set<CatalogValue> catalogValues;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Catalog catalog = (Catalog) o;
-        return keyWord.equals(catalog.keyWord);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(keyWord);
-    }
 }

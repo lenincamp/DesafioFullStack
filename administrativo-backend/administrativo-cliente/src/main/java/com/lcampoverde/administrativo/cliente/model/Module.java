@@ -1,6 +1,7 @@
 package com.lcampoverde.administrativo.cliente.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.validator.constraints.URL;
@@ -29,13 +30,14 @@ import java.util.Set;
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode(callSuper = false)
 public class Module extends Asserts implements Serializable {
 
     private static final long serialVersionUID = -4924058894440960413L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @Column(name = "URL")
     @URL

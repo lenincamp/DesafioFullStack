@@ -1,9 +1,9 @@
 package com.lcampoverde.administrativo.cliente.model.nopersist;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.lcampoverde.administrativo.cliente.model.ModuleAction;
 import com.lcampoverde.administrativo.cliente.model.Role;
 import com.lcampoverde.administrativo.cliente.model.User;
-import com.lcampoverde.administrativo.cliente.utils.Util;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,11 +13,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
+
 
 @Builder(toBuilder=true)
 @AllArgsConstructor
@@ -67,14 +71,18 @@ public class UserPrincipal implements UserDetails {
 
     private static Map<String, Object> loadDataRoles(User user, Boolean getRoles) {
         if (getRoles) {
-            Set<Role> roles = user.getRoles().stream().map(Role::new).collect(Collectors.toSet());
-            roles.forEach(role -> {
-                role.setPermissions(
-                        role.getPermissions().stream().filter(Util.distinctByKey(p -> p.getId().getModuleId())).collect(Collectors.toSet())
+            Set<RoleVO> roles = new HashSet<>();
+            user.getRoles().forEach(role -> {
+                Map<ModuleVO, Map<Long, String>> permissionForRole = groupByModule(role);
+                roles.add(
+                    RoleVO.builder()
+                        .id(role.getId())
+                        .name(role.getName())
+                        .description(role.getDescription())
+                        .modules(actionsClear(permissionForRole))
+                        .build()
                 );
-                role.getPermissions().forEach(p -> p.getModule().getActionsSet().size());
             });
-
             Map<String, Object> rolesMap = new HashMap<>();
             rolesMap.put("roles", roles);
             rolesMap.put("photo", user.getPhoto());
@@ -82,6 +90,43 @@ public class UserPrincipal implements UserDetails {
         } else {
             return null;
         }
+    }
+
+    private static Map<ModuleVO, Map<Long, String>> groupByModule(Role role) {
+        return role.getPermissions().stream().collect(
+            groupingBy(
+                (ModuleAction ma) -> ModuleVO.builder()
+                    .id(ma.getModule().getId())
+                    .description(ma.getModule().getDescription())
+                    .title(ma.getModule().getTitle())
+                    .url(ma.getModule().getUrl())
+                    .actions(
+                        ma.getModule().getActionsSet().stream().map(
+                            x -> ActionsVO.builder()
+                                .description(x.getDescription())
+                                .id(x.getId())
+                                .title(x.getTitle())
+                                .build()
+                        ).collect(Collectors.toSet())
+                    )
+                    .build() ,
+                Collectors.toMap((ModuleAction m)->m.getId().getActionId(),  m -> null == m.getUrl() ? "" : m.getUrl())
+            )
+        );
+    }
+
+    private static Set<ModuleVO>  actionsClear(Map<ModuleVO, Map<Long, String>> permissionForRole) {
+        Set<ModuleVO> modules = new HashSet<>();
+        permissionForRole.forEach((k, v) -> {
+            Set<ActionsVO> actions = new HashSet<>();
+            k.getActions().forEach(a -> {
+                if (v.containsKey(a.getId())) {
+                    actions.add(a.toBuilder().url(v.get(a.getId())).build());
+                }
+            });
+            modules.add(k.toBuilder().actions(actions).build());
+        });
+        return modules;
     }
 
     public Long getId() {

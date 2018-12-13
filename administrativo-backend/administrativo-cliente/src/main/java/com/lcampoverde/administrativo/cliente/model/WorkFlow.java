@@ -3,6 +3,7 @@ package com.lcampoverde.administrativo.cliente.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,7 +23,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 /**
  * @author lenin
@@ -34,12 +34,13 @@ import java.util.Objects;
 @Entity
 @Table(name = "WORKFLOW")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode
 public class WorkFlow implements Serializable {
     private static final long serialVersionUID = -1727254825979380805L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @NotBlank
     @Size(max = 60)
@@ -70,16 +71,4 @@ public class WorkFlow implements Serializable {
     @JoinColumn(name = "PROCESS_ID", referencedColumnName = "ID")
     private Process process;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        WorkFlow workFlow = (WorkFlow) o;
-        return id.equals(workFlow.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

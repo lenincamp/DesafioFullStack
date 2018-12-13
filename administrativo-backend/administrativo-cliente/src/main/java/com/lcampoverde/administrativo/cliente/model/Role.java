@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,7 +42,7 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
@@ -55,8 +56,9 @@ public class Role implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "ROLE_PERMISSION",
-            joinColumns = @JoinColumn(name = "ROLE_ID"),
-            inverseJoinColumns = {@JoinColumn(name = "MODULE_ID"), @JoinColumn(name = "ACTION_ID")}
+            joinColumns = @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = { @JoinColumn(name = "MODULE_ID",referencedColumnName = "MODULE_ID"), @JoinColumn(name = "ACTION_ID", referencedColumnName = "ACTION_ID")},
+            inverseForeignKey=@ForeignKey(name="permissions_fk")
     )
     private Set<ModuleAction> permissions = new HashSet<>();
 

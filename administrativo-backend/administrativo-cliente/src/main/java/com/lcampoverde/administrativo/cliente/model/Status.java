@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -23,7 +24,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,13 +37,14 @@ import java.util.Set;
 @Entity
 @Table(name = "STATUS")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode(callSuper = false)
 public class Status extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = -2349143036636034963L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @Column(name = "FINISH_DATE")
     @Temporal(TemporalType.TIMESTAMP)
@@ -95,17 +96,5 @@ public class Status extends UserDateAudit implements Serializable {
     @JoinColumn(name = "EXECUTION_ID", referencedColumnName = "ID", insertable=false ,updatable=false)
     private Execution execution;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Status status = (Status) o;
-        return Objects.equals(id, status.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }
 

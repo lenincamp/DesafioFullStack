@@ -3,6 +3,7 @@ package com.lcampoverde.administrativo.cliente.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,8 +23,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode
 public class UserRoles implements Serializable {
     private static final long serialVersionUID = 4365916850976173284L;
     @EmbeddedId
-    private UserRolesId id;
+    @EqualsAndHashCode.Include private UserRolesId id;
 }

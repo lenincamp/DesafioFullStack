@@ -3,6 +3,7 @@ package com.lcampoverde.administrativo.cliente.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lcampoverde.administrativo.cliente.constant.UserGroupName;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -37,13 +37,14 @@ import java.util.Set;
 @Entity
 @Table(name = "USER_GROUP")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode(callSuper = false)
 public class UserGroup extends UserDateAudit implements Serializable {
 
     private static final long serialVersionUID = 1446243722130725078L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @Enumerated(EnumType.STRING)
     @NaturalId
@@ -67,17 +68,4 @@ public class UserGroup extends UserDateAudit implements Serializable {
     @OneToMany(mappedBy = "groupParent")
     private Set<UserGroup> groupChildren;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        UserGroup userGroup = (UserGroup) o;
-        return Objects.equals(id, userGroup.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), id);
-    }
 }

@@ -1,3 +1,6 @@
+alter table role_permission drop constraint permissions_fk;
+alter table role_permission add constraint permissions_fk foreign key (module_id, action_id) references actions_modules;
+
 /*ROLE USERS*/
 INSERT INTO ROLE(DESCRIPTION, NAME) VALUES ('ROLE FOR USER-ADMINS', 'ROLE_ADMIN');
 INSERT INTO ROLE(DESCRIPTION, NAME) VALUES ('ROLE FOR USER-TRIADOR', 'ROLE_USER');

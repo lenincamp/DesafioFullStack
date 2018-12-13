@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lcampoverde.administrativo.cliente.model.audit.UserDateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -31,6 +32,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Builder(toBuilder=true)
+@EqualsAndHashCode(callSuper = false)
 @Entity
 @Table(name = "PROCESS")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -40,7 +42,7 @@ public class Process extends UserDateAudit implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Long id;
+    @EqualsAndHashCode.Include private Long id;
 
     @NotBlank
     @Size(max = 60)

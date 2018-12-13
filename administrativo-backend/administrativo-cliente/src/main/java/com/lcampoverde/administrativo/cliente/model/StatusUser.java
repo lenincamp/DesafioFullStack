@@ -3,6 +3,7 @@ package com.lcampoverde.administrativo.cliente.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,11 +28,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
+@EqualsAndHashCode
 public class StatusUser implements Serializable {
 
     private static final long serialVersionUID = -1674333475875815574L;
     @EmbeddedId
-    private StatusUserId id;
+    @EqualsAndHashCode.Include private StatusUserId id;
 
     /**
      * status of process executions.

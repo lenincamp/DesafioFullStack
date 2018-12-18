@@ -2,7 +2,6 @@ package com.lcampoverde.administrativo.core.service;
 
 import com.lcampoverde.administrativo.cliente.exception.ErrorException;
 import com.lcampoverde.administrativo.cliente.gestor.ProcessGestor;
-import com.lcampoverde.administrativo.cliente.model.Process;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ProcessVO;
 import com.lcampoverde.administrativo.cliente.service.ProcessService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 @Service
 @Lazy
@@ -33,6 +32,7 @@ public class ProcessServiceImpl implements ProcessService {
      * {@inheritDoc}
      */
     @Override
+    @Transactional
     public Collection<ProcessVO> findAllProcess() {
         return processGestor.findAllProcess();
     }
@@ -92,7 +92,15 @@ public class ProcessServiceImpl implements ProcessService {
      * {@inheritDoc}
      */
     @Override
-    public Set<Process> findByUserId(Long userId) {
+    public List<ProcessVO> findByUserId(Long userId) {
         return processGestor.findByUserId(userId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ProcessVO> findByProcessId(Long processId) {
+        return processGestor.findByProcessId(processId);
     }
 }

@@ -1,0 +1,48 @@
+<delete-confirm (onClicConfirm)="deleteProcess(currentIdDelete)"></delete-confirm>
+<edit-process [idProcess]="currentIdEdit"></edit-process>
+<observations [process]="currentProcess" [observationsOlder]="othersObsrv" [addObsrv]="canAddObsv"></observations>
+<assign-user [processToAssign]="currentProcess"></assign-user>
+<div class="col-12 col-sm-10 offset-sm-1">
+	<div class="example-header">
+	  <mat-form-field>
+	    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+	  </mat-form-field>
+	</div>
+
+	<div class="example-container mat-elevation-z8">
+
+	  <mat-table [dataSource]="dataSource" matSort>
+
+	    <ng-container matColumnDef="id">
+	      <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Id</strong> </mat-header-cell>
+	      <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+	    </ng-container>
+
+	    <ng-container matColumnDef="name">
+	      <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Name</strong> </mat-header-cell>
+	      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+	    </ng-container>
+
+	    <ng-container matColumnDef="type">
+	      <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Type</strong> </mat-header-cell>
+	      <mat-cell *matCellDef="let row"> {{row.catalogValueVO.description}} </mat-cell>
+	    </ng-container>
+
+	    <ng-container matColumnDef="action">
+	      <mat-header-cell *matHeaderCellDef mat-sort-header> <strong>Action</strong> </mat-header-cell>
+	      <mat-cell *matCellDef="let row" class="row text-center" align="center"> 
+	      	<button mat-raised-button *ngIf="roles_stg.canUpdate(moduleName)" (click)="openModalEdit(row.id)" title="Edit" class="col-12 col-sm-1 shadow-none text-info"><mat-icon>{{icon_svr.getIcon("UPDATE")}}</mat-icon></button>
+	      	<button mat-raised-button  (click)="openModalConclusion(row)" title="Observations" class="col-12 col-sm-1 shadow-none text-primary"><mat-icon>{{icon_svr.getIcon("OPINE")}}</mat-icon></button>
+	      	<button mat-raised-button *ngIf="roles_stg.canExecute(moduleName)" (click)="openModalAssign(row)" title="Assign" class="col-12 col-sm-1 shadow-none text-warning"><mat-icon>{{icon_svr.getIcon("ASSIGN")}}</mat-icon></button>
+	      	<button mat-raised-button *ngIf="roles_stg.canRemove(moduleName)" (click)="openModalDelete(row.id)" title="Remove" class="col-12 col-sm-1 shadow-none text-danger"><mat-icon>{{icon_svr.getIcon("REMOVE")}}</mat-icon></button>
+	      </mat-cell>
+	    </ng-container>
+
+	    <mat-header-row *matHeaderRowDef="displayedColumns" class="form-title text-center"></mat-header-row>
+	    <mat-row *matRowDef="let row; columns: displayedColumns;" id="prc_{{row.id}}">
+	    </mat-row>
+	  </mat-table>
+
+	  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+	</div>
+</div>

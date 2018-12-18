@@ -1,0 +1,8 @@
+version: '3.1'
+services:
+  angular:
+    build: .
+    restart: always
+    container_name: bootdockercontainerng
+    ports:
+      - 4200:4200

@@ -1,0 +1,10 @@
+@import url( 'https://fonts.googleapis.com/css?family=Roboto:400,700|Material+Icons');
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/css/bootstrap.min.css";
+@import "./assets/css/general-style.css";
+@import "./assets/css/mat-snack-bar.css";
+
+body{
+	padding: 0px;
+	margin: 0px;
+}

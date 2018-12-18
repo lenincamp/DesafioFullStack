@@ -107,11 +107,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/v2/api-docs")
                 .permitAll()
-                .antMatchers("/api/auth/signup").hasRole("ADMIN")
-                .antMatchers("/api/process/**").hasRole("ADMIN")
-                .antMatchers("/api/user/**").hasRole("ADMIN")
-                .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
                 .anyRequest().authenticated();
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         http.headers().frameOptions().disable();//for h2 console

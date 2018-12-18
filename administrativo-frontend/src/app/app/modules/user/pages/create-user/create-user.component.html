@@ -1,0 +1,35 @@
+<div class="col-12 col-md-8 offset-md-2">
+	<mat-toolbar class="form-title">Create user</mat-toolbar>
+	<mat-card class="example-card">
+	 <mat-card-content>
+	  	<form class="row">
+			<mat-form-field class="col-12 col-sm-6">
+				<input required type="text" matInput placeholder="First name" id="firstName" name="firstName" [(ngModel)]="person.firstName">
+			</mat-form-field>
+			<mat-form-field class="col-12 col-sm-6">
+				<input required type="text" matInput placeholder="Last name" id="lastName" name="lastName" [(ngModel)]="person.lastName">
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<mat-select placeholder="Role" [(ngModel)]="person.role" name="role" required>
+				    <mat-option *ngFor="let rol of getRoles()" [value]="rol">
+				      {{ rol }}
+				    </mat-option>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<input required type="email" matInput placeholder="E-mail" id="email" name="email" [(ngModel)]="person.email">
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<input required type="email" matInput placeholder="User name" id="userName" name="userName" [(ngModel)]="person.userName">
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<input required type="password" matInput placeholder="Password" name="clave" minlength="6" maxlength="20" [(ngModel)]="person.password">
+			</mat-form-field>
+		</form>
+	  </mat-card-content>
+	  <mat-card-actions align="center">
+	    <button mat-raised-button class="form-button" (click)="saveUser()">Save</button>
+	    <button mat-raised-button  (click)="resetForm()">Reset</button>
+	  </mat-card-actions>
+	</mat-card>
+</div>

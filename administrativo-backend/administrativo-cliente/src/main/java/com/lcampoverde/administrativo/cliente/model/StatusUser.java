@@ -52,6 +52,8 @@ public class StatusUser implements Serializable {
     /**
      * Observations by user of status.
      */
-    @OneToMany(mappedBy = "statusUser")
+    @OneToMany
+    @JoinColumn(name="STATUS_ID", referencedColumnName = "STATUS_ID", insertable = false, updatable = false)
+    @JoinColumn(name="USER_ID", referencedColumnName = "USER_ID", insertable = false, updatable = false)
     private Set<Observations> observations;
 }

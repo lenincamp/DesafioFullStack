@@ -1,10 +1,9 @@
 package com.lcampoverde.administrativo.cliente.service;
 
-import com.lcampoverde.administrativo.cliente.model.Process;
 import com.lcampoverde.administrativo.cliente.model.nopersist.ProcessVO;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.List;
 
 /**
  * @author lenin
@@ -67,5 +66,11 @@ public interface ProcessService {
      * @param userId
      * @return
      */
-    Set<Process> findByUserId(Long userId);
+    List<ProcessVO> findByUserId(Long userId);
+
+    /**
+     * get process with all relations.
+     * @return
+     */
+    List<ProcessVO> findByProcessId(Long processId);
 }

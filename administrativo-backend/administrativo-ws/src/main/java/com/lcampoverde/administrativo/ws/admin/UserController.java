@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,15 +34,17 @@ import java.util.Set;
 @RestController
 @RequestMapping("/api/user")
 @Api(value = "User", description = "Operations for user.")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
     @Autowired
     @Lazy
     private UserService userService;
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/find")
     @ApiOperation(value = "List users for status or status and roles.", response = CustomApiResponse.class,
-            notes = "Multiple values of execution users in dataCol property.", responseContainer = "List<User>")
+            notes = "Multiple values of users in dataCol property.", responseContainer = "List<User>")
     public ResponseEntity<CustomApiResponse> findUserByEnabledAndRole(
             @RequestParam(value="enabled",required=false) Boolean enabled,
             @RequestParam(value="roleId",required=false) Long roleId
@@ -60,7 +63,7 @@ public class UserController {
         }
     }
 
-
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     @GetMapping("/find/{id}")
     @ApiOperation(value = "Find user by id.", response = CustomApiResponse.class,
             notes = "User in data property.", responseContainer = "User")
@@ -103,8 +106,8 @@ public class UserController {
     }
 
     @PutMapping("/update/{userId}/{roleId}")
-    @ApiOperation(value = "Update execution process by id.", response = CustomApiResponse.class,
-            notes = "Return execution process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
+    @ApiOperation(value = "Update user by id.", response = CustomApiResponse.class,
+            notes = "Return user updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")
     public ResponseEntity<CustomApiResponse> updateUserById(@NotNull @PathVariable Long userId, @NotNull @PathVariable Long roleId, @RequestBody SignUpRequest user) {
         try {
             return ResponseEntity.ok(

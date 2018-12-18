@@ -1,0 +1,14 @@
+.main-head {
+    box-shadow: 0px 2px 3px #333;
+    margin-bottom: 3px;
+    position: fixed;
+    top: 0px;
+}
+
+.icon-menu{
+	margin-left: calc(100vw - 150px);
+}
+
+img{
+	height: 30px;
+}

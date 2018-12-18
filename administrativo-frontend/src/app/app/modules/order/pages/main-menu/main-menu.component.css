@@ -1,0 +1,21 @@
+.main-div{
+	background-color: #FEFEFE;
+	background-image: url("../../../../../../assets/img/fg-3.png"), url("../../../../../../assets/img/logo_completo.png");
+	background-repeat: no-repeat, no-repeat;
+	background-size: 25%, 130px;
+	background-position: left bottom, right bottom; 
+	height: 100vh;
+	width: 100vw;
+}
+.mat-stepper-horizontal{
+	background-color: transparent;
+}
+.mat-horizontal-stepper-header .mat-step-icon{
+    background-color: orange !important;
+    color: #fff;
+}
+.img-stepper{
+	height: 100px;
+	width: auto;
+	float: left;
+}

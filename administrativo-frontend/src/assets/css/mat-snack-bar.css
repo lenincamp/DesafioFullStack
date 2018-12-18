@@ -1,0 +1,18 @@
+.mat-snack-bar-container {
+  background: #323232 !important;
+  color: #fff !important;
+  -webkit-animation: pulsate 2s ease-out;
+  -webkit-animation-iteration-count: infinite; 
+}
+
+@-webkit-keyframes pulsate {
+    0% { 
+         border-top: 7px solid #323232 ;
+    }
+    50% { 
+         border-top: 7px solid #3da5d7 ;
+    }
+    100% { 
+         border-top: 7px solid #323232;
+    }
+}

@@ -1,0 +1,42 @@
+.sidebar-head{
+	min-height: 50px !important;
+	height: 50px !important;
+	box-shadow: 2px 0px 3px #666;
+	border-bottom-right-radius: 3px;
+	background-color: #fff;
+	border-bottom: 5px #484c54 solid;
+}
+
+.sidebar-options{
+	background-color: #f1f2f1;
+	height: calc(100vh - 50px);
+	width: 98%;
+	box-shadow: 2px 0px 3px #666;
+	border-bottom: 5px #484c54 solid;
+}
+
+.sidebar-options a{
+	text-decoration: none;
+	color:inherit;
+}
+
+.main-div{
+	height: 100%;
+	z-index: 999;
+}
+
+button {
+    text-align: right;
+    padding-right: 10px !important;
+	border-bottom: 1px solid #ddd;
+}
+
+mat-icon,span{
+	vertical-align: inherit;
+}
+
+@media only screen and (max-width: 600px) {
+    button {
+       min-width: 30px !important;
+    }
+}

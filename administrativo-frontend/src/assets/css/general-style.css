@@ -1,0 +1,61 @@
+.img-rounded{
+	border-radius: 50%;
+}
+
+.form-title{
+	margin-top: 10px;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	/*/background-color: #5F646B;*/
+	background-color: #fff;
+	color: #000;
+	border-bottom: 5px #5F646B solid;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+	/*border-bottom: 5px #3da5d7 solid;*/
+}
+
+.form-button{
+	background-color: #484c54;
+	color: #fff !important;
+}
+
+.tab-header{
+	position: sticky !important;
+    top: 0px;
+    z-index: 999;
+    background: #fff;
+    overflow-x: auto !important;
+    height: 48px;
+}
+
+.tab-header a{
+	display: inline !important;
+	text-decoration: none;
+}
+
+.overflow-x-auto{
+	overflow-x: auto;
+}
+
+.mat-tab-links{
+	height: 48px;
+    padding-top: 12px;
+    position: relative;
+}
+
+.mat-cell button{
+	background: transparent;
+}
+.cdk-global-overlay-wrapper, .cdk-overlay-container {
+	z-index: 9999 !important;
+}
+
+.list-group-item {
+    border-radius: 0px !important;
+}
+
+.modal-content {
+	 border-radius: 0px !important;
+	 -webkit-box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+    box-shadow: 0 5px 5px -3px rgba(0,0,0,.2), 0 8px 10px 1px rgba(0,0,0,.14), 0 3px 14px 2px rgba(0,0,0,.12);
+}

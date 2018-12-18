@@ -62,11 +62,6 @@ public class Observations extends UserDateAudit implements Serializable {
     @NotNull
     @Builder.Default private Boolean enabled = Boolean.TRUE;
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID", insertable=false ,updatable=false)
-    @JoinColumn(name = "STATUS_ID", referencedColumnName = "STATUS_ID", insertable=false ,updatable=false)
-    private StatusUser statusUser;
-
     /**
      * Severity.(mild, medium, high, very high, extremely high)
      */

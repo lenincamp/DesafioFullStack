@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,7 @@ public class ProcessController {
     @Lazy
     private ProcessService processService;
 
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     @ApiOperation(value = "Create process.", response = CustomApiResponse.class)
     public ResponseEntity<CustomApiResponse> cerateProcess(@Valid @RequestBody ProcessVO process) {
@@ -56,6 +58,7 @@ public class ProcessController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/list_all")
     @ApiOperation(value = "List all process.", response = CustomApiResponse.class,
             notes = "Multiple values of process in dataCol property.", responseContainer = "List<Process>")
@@ -72,6 +75,7 @@ public class ProcessController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/find_by_edit/{id}")
     @ApiOperation(value = "Get process by id.", response = CustomApiResponse.class,
             notes = "Process in data property.", responseContainer = "Process")
@@ -88,6 +92,7 @@ public class ProcessController {
         }
     }
 
+    @PreAuthorize("hasRole('USER_FINAL')")
     @GetMapping("/find_by_user")
     @ApiOperation(value = "List process by user.", response = CustomApiResponse.class,
             notes = "Multiple values of process in dataCol property.", responseContainer = "List<Process>")
@@ -104,6 +109,24 @@ public class ProcessController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
+    @GetMapping("/find_by_processId")
+    @ApiOperation(value = "List process by process id.", response = CustomApiResponse.class,
+            notes = "Multiple values of process in dataCol property.", responseContainer = "List<Process>")
+    public ResponseEntity<CustomApiResponse> findByProcessId(@NotNull @RequestParam Long processId) {
+        try {
+            return ResponseEntity.ok(
+                    CustomApiResponse.builder()
+                            .success(Boolean.TRUE)
+                            .dataCol(new ArrayList<>(processService.findByProcessId(processId)))
+                            .build()
+            );
+        } catch (Exception e) {
+            return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
+        }
+    }
+
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Delete process by id.", response = CustomApiResponse.class,
             notes = "On error return false and message error for client.", responseContainer = "CustomApiResponse")
@@ -121,6 +144,7 @@ public class ProcessController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/update")
     @ApiOperation(value = "Update process.", response = CustomApiResponse.class,
             notes = "Return process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")

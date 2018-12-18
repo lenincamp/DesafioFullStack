@@ -1,0 +1,27 @@
+<div class="main-div">
+	<div class="col-sm-12 col-md-4 offset-md-4 pt-5">
+		<mat-toolbar class="login-title"><strong>Login</strong></mat-toolbar>
+		<mat-card class="example-card">
+		 <mat-card-content>
+		  	<form>
+				<mat-form-field class="col-sm-12">
+					<input type="text" matInput placeholder="User or e-mail" id="email" name="email" [(ngModel)]="username">
+					<mat-icon matSuffix>person</mat-icon>
+				</mat-form-field>
+				<br>
+				<mat-form-field class="col-sm-12">
+					<input type="password" matInput placeholder="Password" name="clave" (keypress)="pressKeyPassword($event)" [(ngModel)]="password">
+					<mat-icon matSuffix>vpn_key</mat-icon>
+				</mat-form-field>
+				<div id="message_error" class="alert alert-info alert-dismissible fade show" role="alert"  [ngClass]="error ? 'show' : 'hide'">
+				  {{error_msg}}
+				</div>
+			</form>
+		  </mat-card-content>
+		  <mat-card-actions align="center">
+		    <button mat-raised-button (click)="login()" *ngIf="!flagLoading">Go</button>
+		    <span *ngIf="flagLoading" class="p-4 text-primary">Loading...</span>
+		  </mat-card-actions>
+		</mat-card>
+	</div>
+</div>

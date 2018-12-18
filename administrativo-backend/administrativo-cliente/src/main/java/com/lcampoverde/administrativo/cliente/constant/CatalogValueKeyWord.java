@@ -9,5 +9,6 @@ public enum CatalogValueKeyWord {
     SA,
     SF,
     OP,
-    PM
+    PM,
+    OD
 }

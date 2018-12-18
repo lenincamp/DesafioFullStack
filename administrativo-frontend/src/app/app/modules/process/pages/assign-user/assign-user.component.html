@@ -1,0 +1,47 @@
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="assignModal" id="assignModal" #assignModal aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="assignModal">Assign user</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      	<form class="row">
+      		<mat-form-field class="col-12">
+				<input readonly type="text" matInput placeholder="Name" id="name" name="name" [(ngModel)]="processToAssign.name">
+			</mat-form-field>
+			<mat-form-field class="col-12">
+				<textarea readonly matInput placeholder="Description" id="description" name="description" [(ngModel)]="processToAssign.description" rows="3"></textarea>
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+			  <input matInput [min]="execution.createAt" [matDatepicker]="picker" name="finishDate" [(ngModel)]="execution.finishDate" placeholder="Choose a date">
+			  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+			  <mat-datepicker #picker></mat-datepicker>
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<mat-select required placeholder="Users" name="users">
+					<mat-option disable>Select user to add</mat-option>
+				    <mat-option *ngFor="let user of listUser" [value]="user.id" (click)="addUser(user)">
+				      {{ user.fullName }}
+				    </mat-option>
+				</mat-select>
+			</mat-form-field>
+			<ul class="list-group" id="asignados" class="col-12">
+			  <li class="list-group-item disabled">Assigned users</li>
+			  <li class="list-group-item" *ngFor="let user of listUserSelected">{{user.fullName}}
+			  	<button (click)="removeUser(user)" type="button" class="close" aria-label="Close">
+				    <span aria-hidden="true">&times;</span>
+				</button>
+			  </li>
+			</ul>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button mat-raised-button class="btn btn-dark text-white" (click)="saveExecution()">Save</button>
+        <button mat-raised-button class="btn" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

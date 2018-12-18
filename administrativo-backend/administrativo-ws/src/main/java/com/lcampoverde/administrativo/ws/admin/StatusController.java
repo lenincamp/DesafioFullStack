@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,11 +21,12 @@ import java.net.URI;
 
 /**
  * @author lenin
- * Rest controller for catalog value.
+ * Rest controller for status.
  */
 @RestController
 @RequestMapping("/api/process/execution/status")
 @Api(value = "Status of executions process", description = "Status by execution.")
+@PreAuthorize("hasAnyRole('USER','USER_FINAL')")
 public class StatusController {
 
     @Autowired

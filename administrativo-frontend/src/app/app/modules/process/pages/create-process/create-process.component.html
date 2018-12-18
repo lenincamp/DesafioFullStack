@@ -1,0 +1,29 @@
+<div class="col-12 col-md-8 offset-md-2">
+	<mat-toolbar class="form-title">Create process</mat-toolbar>
+	<mat-card class="example-card">
+	 <mat-card-content>
+	  	<form class="row">
+			<mat-form-field class="col-12">
+				<input required type="text" matInput placeholder="Name" id="name" name="name" [(ngModel)]="process.name">
+			</mat-form-field>
+			<mat-form-field class="col-12">
+				<textarea required matInput placeholder="Description" id="description" name="description" [(ngModel)]="process.description" rows="3"></textarea>
+			</mat-form-field>
+			<mat-form-field class="col-sm-12">
+				<mat-select required placeholder="Type" name="typeProcess" [(ngModel)]="process.typeProcess">
+				    <mat-option *ngFor="let tipo of tipos" [value]="tipo.id" >
+				      {{ tipo.description }}
+				    </mat-option>
+				</mat-select>
+			</mat-form-field>
+			<div class="col-12">
+				<mat-checkbox class="example-margin" [(ngModel)]="process.enabled" name="enabled">Active</mat-checkbox>
+			</div>
+		</form>
+	  </mat-card-content>
+	  <mat-card-actions align="center">
+	    <button mat-raised-button class="form-button" (click)="saveProcess()">Save</button>
+	    <button mat-raised-button (click)="reset()">Reset</button>
+	  </mat-card-actions>
+	</mat-card>
+</div>

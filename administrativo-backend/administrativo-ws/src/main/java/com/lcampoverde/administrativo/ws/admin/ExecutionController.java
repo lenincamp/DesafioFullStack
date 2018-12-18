@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,7 @@ public class ExecutionController {
     @Autowired
     @Lazy
     private ExecutionService executionService;
-
+    @PreAuthorize("hasRole('USER')")
     @PostMapping("/create")
     @ApiOperation(value = "Create execution process.", response = CustomApiResponse.class)
     public ResponseEntity<CustomApiResponse> createExecutionProcess(@Valid @RequestBody ExecutionVO executionVO) {
@@ -59,7 +60,7 @@ public class ExecutionController {
             return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(ex.getMessage()).build());
         }
     }
-
+    @PreAuthorize("hasAnyRole('USER','USER_FINAL')")
     @GetMapping("/find_execution")
     @ApiOperation(value = "List all execution by process id, process id and dates or dates, or id.", response = CustomApiResponse.class,
             notes = "Multiple values of execution process in dataCol property.", responseContainer = "List<Execution>")
@@ -87,6 +88,7 @@ public class ExecutionController {
         }
     }
 
+    @PreAuthorize("hasRole('USER')")
     @DeleteMapping("/delete")
     @ApiOperation(value = "Delete execution process by id or process id.", response = CustomApiResponse.class,
             notes = "On error return false and message error for client.", responseContainer = "CustomApiResponse")
@@ -106,7 +108,7 @@ public class ExecutionController {
             return ResponseEntity.ok(CustomApiResponse.builder().success(Boolean.FALSE).message(e.getMessage()).build());
         }
     }
-
+    @PreAuthorize("hasRole('USER')")
     @PutMapping("/update")
     @ApiOperation(value = "Update execution process by id.", response = CustomApiResponse.class,
             notes = "Return execution process updated on data property, On error return false and message error for client.", responseContainer = "CustomApiResponse")

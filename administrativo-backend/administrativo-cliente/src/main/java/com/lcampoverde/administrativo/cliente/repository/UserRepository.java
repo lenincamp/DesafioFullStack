@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Repository
 @Lazy
@@ -56,7 +55,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query("select u from User u join fetch u.roles r where u.enabled = :enabled")
-    Set<User> findByEnabled(@Param("enabled") Boolean enabled);
+    List<User> findByEnabled(@Param("enabled") Boolean enabled);
 
     /**
      * Get users by status and role.
@@ -65,6 +64,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return
      */
     @Query("select u from User u join fetch u.roles r where u.enabled = :enabled and r.id=:roleId")
-    Set<User> findByEnabledAndRole(@Param("enabled")Boolean enabled, @Param("roleId")Long roleId);
+    List<User> findByEnabledAndRole(@Param("enabled")Boolean enabled, @Param("roleId")Long roleId);
 
 }

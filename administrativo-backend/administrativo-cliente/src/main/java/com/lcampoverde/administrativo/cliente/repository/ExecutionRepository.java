@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 
 @Repository
@@ -34,13 +34,13 @@ public interface ExecutionRepository extends JpaRepository<Execution, Long> {
      * @param enabled status active o inactive.
      * @return all process with condition.
      */
-    Set<Execution> findByEnabled(Boolean enabled);
+    List<Execution> findByEnabled(Boolean enabled);
 
     /**
      * Find executions by process id.
      */
     @Query("select ex from Execution ex join fetch ex.statuses st join fetch st.catalogValue where ex.processId = :processId and st.enabled = true and st.finishDate is null")
-    Set<Execution> findExecutionByProcessId(@Param("processId") Long processId);
+    List<Execution> findExecutionByProcessId(@Param("processId") Long processId);
 
     /**
      * Find executions by id.
@@ -71,7 +71,7 @@ public interface ExecutionRepository extends JpaRepository<Execution, Long> {
      * @param fin date finish
      * @return set of executions.
      */
-    Set<Execution> findExecutionsByCreatedAtBetween(Date ini, Date fin);
+    List<Execution> findExecutionsByCreatedAtBetween(Date ini, Date fin);
 
     /**
      * Find by process id and created at.
@@ -80,5 +80,5 @@ public interface ExecutionRepository extends JpaRepository<Execution, Long> {
      * @param fin date ent.
      * @return set of executions.
      */
-    Set<Execution> findExecutionsByProcessIdAndCreatedAtBetween(Long processId, Date ini, Date fin);
+    List<Execution> findExecutionsByProcessIdAndCreatedAtBetween(Long processId, Date ini, Date fin);
 }

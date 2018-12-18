@@ -1,0 +1,17 @@
+<mat-toolbar class="main-head d-md-none d-block">
+	<mat-toolbar-row>
+		<!--span class="text-dark">Full</span><span class="text-white">stack</span-->
+		<img src="../../../assets/img/fg-1.png">
+		<div class="nav-options button-row">
+			<button class="d-xs-block d-md-none icon-menu" mat-icon-button [matMenuTriggerFor]="menu">
+			  <mat-icon>more_vert</mat-icon>
+			</button>
+		</div>
+	</mat-toolbar-row>
+</mat-toolbar>
+<mat-menu #menu="matMenu">
+  <button mat-menu-item>
+    <mat-icon>exit_to_app</mat-icon>
+    <span>Cerrar Sesión</span>
+  </button>
+</mat-menu>

@@ -29,6 +29,7 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -98,7 +99,7 @@ public class ExecutionGestorImpl implements ExecutionGestor {
         }
     }
 
-    private Set<ExecutionVO> getSetExecutionsByProcess(Set<Execution> ex) {
+    private Set<ExecutionVO> getSetExecutionsByProcess(List<Execution> ex) {
         return ex
             .stream()
             .map(x ->
@@ -282,7 +283,7 @@ public class ExecutionGestorImpl implements ExecutionGestor {
      */
     @Override
     public Set<ExecutionVO> findExecutionByDate(Date dateIni, Date dateEnd) {
-        Set<Execution> executions = executionRepository.findExecutionsByCreatedAtBetween(dateIni, dateEnd == null ? dateIni : dateEnd);
+        List<Execution> executions = executionRepository.findExecutionsByCreatedAtBetween(dateIni, dateEnd == null ? dateIni : dateEnd);
         Set<ExecutionVO> executionsVO = new HashSet<>();
         executions.forEach(ex->executionsVO.add(executionToVO(ex)));
         return executionsVO;
